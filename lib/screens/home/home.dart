@@ -57,7 +57,7 @@ class Home extends StatelessWidget {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.only(left: 8.0, right: 8.0),
+            padding: EdgeInsets.only(left: 12.0, right: 12.0),
 
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
