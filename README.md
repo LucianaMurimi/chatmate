@@ -1,3 +1,3 @@
 # chatmate
 
-An app connecting the user to the therapists and mental health services near them.
+An application connecting the users to the therapists and mental health facilities near them
