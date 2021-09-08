@@ -21,7 +21,7 @@ class Menu extends StatelessWidget {
       //------------------------------------------------------------
       appBar: AppBar(
         backgroundColor: Colors.white,
-        iconTheme: chatmateIconTheme(ThemeData.light().iconTheme),
+        iconTheme:  IconThemeData(color: Color(0xFF000000)),
         elevation: 2.0,
 
         toolbarHeight: 72.0,
@@ -29,7 +29,7 @@ class Menu extends StatelessWidget {
         titleSpacing: 0,
 
         title: Text('Menu',
-            style: TextStyle(color: Color(0xFF000000), fontFamily: 'MonospaceBold', fontSize: 24.0, fontWeight: FontWeight.bold)),
+            style: TextStyle(color: Color(0xFF009624), fontFamily: 'MonospaceBold', fontSize: 24.0, fontWeight: FontWeight.bold)),
       ),
       body: Column(
         children: [
@@ -53,7 +53,7 @@ class Menu extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text('Log Out?'),
+                      title: Text('Log Out?',  style: TextStyle(color: Color(0xFF009624))),
                       content: Text('Are you sure you want to log out?'),
                       actions: [
                         TextButton(onPressed: () async {
@@ -65,8 +65,13 @@ class Menu extends StatelessWidget {
                               )
                             });
                         },
-                            child: Text('Yes', style: TextStyle(color: Color(0xFF000000)),)),
-                        TextButton(onPressed: (){}, child: Text('No'))
+                        child: Text('Yes', style: TextStyle(color: Color(0xFF000000), fontWeight: FontWeight.bold),),
+                        ),
+                        TextButton(onPressed: (){
+                          Navigator.pop(context, false);
+                        },
+                        child: Text('No', style: TextStyle(color: Color(0xFF009624), fontWeight: FontWeight.bold),),
+                        )
                       ],
                     );
                   }
@@ -79,25 +84,25 @@ class Menu extends StatelessWidget {
 
       // Bottom Navigation Bar
       //------------------------------------------------------------
-      bottomNavigationBar: BottomAppBar(
-          child: Container(
-            padding: EdgeInsets.only(left: 8.0, right: 0.0),
-
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-
-              children: [
-                IconButton(onPressed: (){}, icon: Icon(Icons.home, size: 26.0)),
-                IconButton(onPressed: (){}, icon: Icon(Icons.notifications_outlined, size: 26.0)),
-                IconButton(onPressed: (){}, icon: Icon(Icons.directions_sharp, size: 26.0)),
-                IconButton(onPressed: (){}, icon: Icon(Icons.people_alt_outlined, size: 26.0)),
-                IconButton(onPressed: (){}, icon: Icon(Icons.chat_bubble_outline, size: 26.0)),
-              ],
-
-            ),
-          )
-      ),
+      // bottomNavigationBar: BottomAppBar(
+      //     child: Container(
+      //       padding: EdgeInsets.only(left: 8.0, right: 0.0),
+      //
+      //       child: Row(
+      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //         crossAxisAlignment: CrossAxisAlignment.center,
+      //
+      //         children: [
+      //           IconButton(onPressed: (){}, icon: Icon(Icons.home, size: 26.0)),
+      //           IconButton(onPressed: (){}, icon: Icon(Icons.notifications_outlined, size: 26.0)),
+      //           IconButton(onPressed: (){}, icon: Icon(Icons.directions_sharp, size: 26.0)),
+      //           IconButton(onPressed: (){}, icon: Icon(Icons.people_alt_outlined, size: 26.0)),
+      //           IconButton(onPressed: (){}, icon: Icon(Icons.chat_bubble_outline, size: 26.0)),
+      //         ],
+      //
+      //       ),
+      //     )
+      // ),
 
     );
   }

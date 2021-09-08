@@ -2,6 +2,7 @@ import 'package:chatmate_login/screens/menu/menu.dart';
 import 'package:chatmate_login/services/auth.dart';
 import 'package:chatmate_login/theme/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 
 import '../components/components.dart';
 
@@ -23,7 +24,7 @@ class Home extends StatelessWidget {
       //------------------------------------------------------------
       appBar: AppBar(
         backgroundColor: Colors.white,
-        iconTheme: chatmateIconTheme(ThemeData.light().iconTheme),
+        iconTheme: IconThemeData(color: Color(0xFF000000)),
         elevation: 2.0,
 
         toolbarHeight: 72.0,
@@ -66,7 +67,7 @@ class Home extends StatelessWidget {
               children: [
                 Text("Karibu.", style: TextStyle(fontFamily: 'MonospaceBold', fontSize: 24)),
                 Text("We've Got You!", style: TextStyle(fontFamily: 'MonospaceBold', fontSize: 24)),
-                Image.asset("assets/images/quickchat.png", height: 212),
+                Image.asset("assets/images/quickchat.png", height: 180),
 
                 Text('Take a deep breathe. Relax. We are about to connect you to the best therapists and mental health services near you.',
                   textAlign: TextAlign.center,
@@ -78,9 +79,10 @@ class Home extends StatelessWidget {
                     padding: EdgeInsets.only(top: 2.0, right: 16.0, bottom: 2.0, left: 16.0),
                     decoration: BoxDecoration(color: Color(0xFF00c853), borderRadius: BorderRadius.circular(24.0)),
 
+
                     child: TextButton(
                       child: Text('CONNECT',
-                          style: TextStyle(color: Color(0xFFffffff), fontSize: 14.0, fontWeight: FontWeight.bold, letterSpacing: 3)),
+                          style: TextStyle(color: Color(0xFFffffff), fontFamily: 'MonospaceBold', fontSize: 18.0, fontWeight: FontWeight.bold, letterSpacing: 2)),
                       onPressed: (){
                         // Navigator.push(
                         //   context,

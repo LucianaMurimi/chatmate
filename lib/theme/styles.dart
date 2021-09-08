@@ -31,7 +31,7 @@ ThemeData chatmateTheme() {
 
     textSelectionColor: chatmateSecondary,
 
-    iconTheme: chatmateIconTheme(base.iconTheme),
+    // iconTheme: chatmateIconTheme(base.iconTheme),
   );
 }
 
