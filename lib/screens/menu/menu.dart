@@ -53,7 +53,7 @@ class Menu extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text('Log Out?',  style: TextStyle(color: Color(0xFF009624))),
+                      title: Text('Log Out?',  style: TextStyle(color: Color(0xFF009624), fontSize: 20.0,)),
                       content: Text('Are you sure you want to log out?'),
                       actions: [
                         TextButton(onPressed: () async {
@@ -81,28 +81,6 @@ class Menu extends StatelessWidget {
 
         ],
       ),
-
-      // Bottom Navigation Bar
-      //------------------------------------------------------------
-      // bottomNavigationBar: BottomAppBar(
-      //     child: Container(
-      //       padding: EdgeInsets.only(left: 8.0, right: 0.0),
-      //
-      //       child: Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         crossAxisAlignment: CrossAxisAlignment.center,
-      //
-      //         children: [
-      //           IconButton(onPressed: (){}, icon: Icon(Icons.home, size: 26.0)),
-      //           IconButton(onPressed: (){}, icon: Icon(Icons.notifications_outlined, size: 26.0)),
-      //           IconButton(onPressed: (){}, icon: Icon(Icons.directions_sharp, size: 26.0)),
-      //           IconButton(onPressed: (){}, icon: Icon(Icons.people_alt_outlined, size: 26.0)),
-      //           IconButton(onPressed: (){}, icon: Icon(Icons.chat_bubble_outline, size: 26.0)),
-      //         ],
-      //
-      //       ),
-      //     )
-      // ),
 
     );
   }
