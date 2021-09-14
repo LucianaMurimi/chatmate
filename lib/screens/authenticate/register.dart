@@ -206,6 +206,39 @@ class _RegisterState extends State<Register> {
 
                     ),
 
+                    SizedBox(height: 20.0),
+
+                    // 6. login | exit
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+
+                        children: [
+                          InkWell(
+                            child: Text('Login'),
+
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SignIn()),
+                              );
+                            },
+                          ),
+                          Text('    |    '),
+                          InkWell(
+                            child: Text('Exit'),
+
+                            onTap: (){
+
+                            },
+                          )
+                        ],
+                      )
+                    )
+
+
+
+
 
                   ],
                 ),
