@@ -49,7 +49,6 @@ TextTheme _chatmateTextTheme(TextTheme base) {
   return base
       .apply(
     fontFamily: 'WorkSansMedium',
-
   );
 }
 

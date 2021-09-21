@@ -177,6 +177,12 @@ class _RegisterState extends State<Register> {
                                 // registration successful
                                 setState(() {
                                   _loading = false;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('Registration successful!',
+                                        style: TextStyle(color: Colors.green),
+                                        textAlign: TextAlign.center,),
+                                        backgroundColor: Color(0xFFffffff),)
+                                  );
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => SignIn()),

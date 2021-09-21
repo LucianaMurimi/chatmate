@@ -41,4 +41,30 @@ Future processRequest() async {
    final accessCredentials = await getClientCredentials();
 
    print(accessCredentials.accessToken);
+
+   try{
+     await http.post(
+         Uri.parse('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest'),
+         headers: {
+           'Authorization': 'Bearer ${accessCredentials.accessToken}',
+           'Content-Type': 'application/json',
+           'Accept': 'application/json',
+         },
+         body: jsonEncode({
+           "BusinessShortCode": 174379,
+           "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjEwOTAxMTEwNTI4",
+           "Timestamp": "20210901110528",
+           "TransactionType": "CustomerPayBillOnline",
+           "Amount": 1,
+           "PartyA": 254721600958,
+           "PartyB": 174379,
+           "PhoneNumber": 254721600958,
+           "CallBackURL": "https://mydomain.com/path",
+           "AccountReference": "CHATMATE",
+           "TransactionDesc": "Payment of X"
+         })
+     );
+   } catch(error){
+     print(error);
+   }
 }
