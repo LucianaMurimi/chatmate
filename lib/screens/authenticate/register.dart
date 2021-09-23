@@ -3,6 +3,8 @@ import 'package:chatmate_login/services/auth.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../models/randomNameGenerator.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -25,6 +27,9 @@ class _RegisterState extends State<Register> {
   bool obscurePassword = true;
   bool _loading = false;
 
+  //----------------------------------------------------------------------------
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   @override
   Widget build(BuildContext context) {
@@ -172,6 +177,12 @@ class _RegisterState extends State<Register> {
                               });
 
                               dynamic result = await _auth.registerWithEmailAndPassword(username, password);
+                              var randomName = generateRandomName();
+                              await users.doc('$username')
+                                          .set({
+                                            'username': '$randomName',
+                                            }).then((value) => print("User Added"))
+                                              .catchError((error) => print("Failed to add user: $error"));
 
                               if(result != null){
                                 // registration successful

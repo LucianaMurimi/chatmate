@@ -31,7 +31,7 @@ class _AddictionsState extends State<Addictions> {
   CollectionReference addictionSupportGroup = FirebaseFirestore.instance.collection('addictionSupportGroup');
 
   final Stream<QuerySnapshot> _addictionSupportGroupStream = FirebaseFirestore.instance.collection('addictionSupportGroup')
-      .snapshots();
+      .orderBy('timestamp', descending: false).snapshots();
   //----------------------------------------------------------------------------
 
   getSavedProfile() async {
@@ -228,6 +228,12 @@ class _AddictionsState extends State<Addictions> {
                                   'timestamp': DateTime.now().millisecondsSinceEpoch,
                                 }).then((value){
                                   print("User Added");
+                                  FocusScopeNode currentFocus = FocusScope.of(context);
+
+                                  if (!currentFocus.hasPrimaryFocus) {
+                                    currentFocus.unfocus();
+                                    _messageController.text = '';
+                                  }
                                 }).catchError((error){
                                   print("Failed to add user: $error");
                                 });
