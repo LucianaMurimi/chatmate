@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:chatmate_login/globals.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -141,6 +142,7 @@ class _SignInState extends State<SignIn> {
                                 print('USERNAME');
                                 print(usernameTemp.data()['username']);
                                 final usernameToSave = usernameTemp.data()['username'];
+                                usernameMain = usernameToSave;
 
                                 _diskStorage.saveToDisk('$usernameToSave', '$username');
 

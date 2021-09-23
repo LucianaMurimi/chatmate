@@ -1,8 +1,11 @@
+import 'package:chatmate_login/models/disk_storage.dart';
 import 'package:chatmate_login/screens/menu/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:chatmate_login/theme/styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import '../../globals.dart';
 
 
 class Addictions extends StatefulWidget {
@@ -12,18 +15,39 @@ class Addictions extends StatefulWidget {
 }
 
 class _AddictionsState extends State<Addictions> {
-  bool sentByMe = false;
-  var messsengerName;
+  var messengerName;
   var message;
 
+  var profile;
+  var savedUsername;
+
+
   final _messageController = TextEditingController();
+
+  final DiskStorage _diskStorage = DiskStorage();
 
   //----------------------------------------------------------------------------
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference addictionSupportGroup = FirebaseFirestore.instance.collection('addictionSupportGroup');
 
-  final Stream<QuerySnapshot> _addictionSupportGroupStream = FirebaseFirestore.instance.collection('addictionSupportGroup').snapshots();
+  final Stream<QuerySnapshot> _addictionSupportGroupStream = FirebaseFirestore.instance.collection('addictionSupportGroup')
+      .snapshots();
   //----------------------------------------------------------------------------
+
+  getSavedProfile() async {
+    profile = await _diskStorage.readFromDisk();
+    setState(() {
+      savedUsername = profile[0];
+    });
+  }
+
+  void initState(){
+    getSavedProfile();
+
+    super.initState();
+  }
+
+
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +92,7 @@ class _AddictionsState extends State<Addictions> {
       //------------------------------------------------------------------------
 
       body: LayoutBuilder(builder: (context, constraints){
+
         return ConstrainedBox(
           constraints: BoxConstraints(minWidth: constraints.maxWidth, minHeight: constraints.maxHeight),
           child: IntrinsicHeight(
@@ -83,7 +108,6 @@ class _AddictionsState extends State<Addictions> {
                       child: StreamBuilder(
                         stream: _addictionSupportGroupStream,
                         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-                          List<Widget> response = [];
 
                           if (snapshot.hasError) {
                             return Center(child: Text('Something went wrong'));
@@ -92,63 +116,65 @@ class _AddictionsState extends State<Addictions> {
                           if (snapshot.connectionState == ConnectionState.waiting) {
                             return Center(child: SpinKitCircle(color: Color(0xFF00c853), size: 70.0),);
                           }
-
+                          // var savedUsername = getSavedProfile;
                           return ListView(
                             children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                              Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+                              messengerName = data['messenger_name'];
+                              message = data['message'];
+                              print(data);
+                              print("==========================================");
 
-                              document.data().forEach((key, value) {
-                                messsengerName = value['messenger_name'];
-                                message = value['message'];
 
-                                response.add(
-                                   Container(
-                                     padding: EdgeInsets.only(
-                                       top: 4,
-                                       bottom: 4,
-                                       left: sentByMe ? 0 : 24,
-                                       right: sentByMe ? 24 : 0,
-                                     ),
-                                     alignment: sentByMe ? Alignment.centerRight : Alignment.centerLeft,
+                              late final savedLuci = _diskStorage.readFromDisk();
+                              print(messengerName);
+                              print(usernameMain);
 
-                                     child: Container(
-                                       margin: sentByMe ? EdgeInsets.only(left: 30) : EdgeInsets.only(right: 30),
-                                       padding: EdgeInsets.only(top: 16, bottom: 16, left: 20, right: 20),
+                              return Container(
+                                padding: EdgeInsets.only(
+                                  top: 4,
+                                  bottom: 4,
+                                  left: (messengerName == usernameMain) ? 0 : 24,
+                                  right: (messengerName == usernameMain) ? 24 : 0,
+                                ),
+                                alignment: (messengerName == usernameMain) ? Alignment.centerRight : Alignment.centerLeft,
 
-                                       decoration: BoxDecoration(
-                                         borderRadius: sentByMe ? BorderRadius.only(
-                                             topLeft: Radius.circular(24),
-                                             topRight: Radius.circular(32),
-                                             bottomLeft: Radius.circular(24)
-                                         ) : BorderRadius.only(
-                                             topLeft: Radius.circular(32),
-                                             topRight: Radius.circular(24),
-                                             bottomRight: Radius.circular(24)
-                                         ),
-                                         border: Border.all(color : sentByMe ? Color(0x80006700) : Color(0x80000000), width: 2.0),
-                                         color: Colors.white,
+                                child: Container(
+                                  margin: (messengerName == usernameMain) ? EdgeInsets.only(left: 30) : EdgeInsets.only(right: 30),
+                                  padding: EdgeInsets.only(top: 16, bottom: 16, left: 20, right: 20),
 
-                                       ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: (messengerName == usernameMain) ? BorderRadius.only(
+                                        topLeft: Radius.circular(24),
+                                        topRight: Radius.circular(32),
+                                        bottomLeft: Radius.circular(24)
+                                    ) : BorderRadius.only(
+                                        topLeft: Radius.circular(32),
+                                        topRight: Radius.circular(24),
+                                        bottomRight: Radius.circular(24)
+                                    ),
+                                    border: Border.all(color : (messengerName == usernameMain) ? Color(0x80006700) : Color(0x80000000), width: 2.0),
+                                    color: Colors.white,
 
-                                       child: Column(
-                                         crossAxisAlignment: CrossAxisAlignment.start,
+                                  ),
 
-                                         children: [
-                                           Text('$messsengerName'.toUpperCase(), textAlign: TextAlign.start, style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Color(0xB3000000), letterSpacing: 1)),
-                                           SizedBox(height: 7.0),
-                                           Text('$message', textAlign: TextAlign.start, style: TextStyle(fontSize: 14.0, color: Color(0xFF000000))),
-                                         ],
-                                       ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
 
-                                     ),
-                                   )
-                                );
+                                    children: [
+                                      Text('$messengerName'.toUpperCase(), textAlign: TextAlign.start, style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Color(0xB3000000), letterSpacing: 1)),
+                                      SizedBox(height: 7.0),
+                                      Text('$message', textAlign: TextAlign.start, style: TextStyle(fontSize: 14.0, color: Color(0xFF000000))),
+                                    ],
+                                  ),
 
-                              });
-                              return Column(children: response.reversed.toList(),);
+                                ),
+                              );
                             }).toList(),
                           );
                         },
                       )
+
                     ),
                   ),
                   //------------------------------------------------------------------
@@ -187,13 +213,26 @@ class _AddictionsState extends State<Addictions> {
                           SizedBox(width: 12.0,),
 
                           GestureDetector(
-                            onTap: (){
+                            onTap: () async {
+                              profile = await _diskStorage.readFromDisk();
+                              savedUsername = profile[0];
+
                               //_sendMessage
                               message = _messageController.text;
-                              print(message);
-                              addictionSupportGroup.add({
+                              if(message == ''){return;}
+                              else{
+                                print(savedUsername);
+                                addictionSupportGroup.add({
+                                  'message' : message,
+                                  'messenger_name': savedUsername,
+                                  'timestamp': DateTime.now().millisecondsSinceEpoch,
+                                }).then((value){
+                                  print("User Added");
+                                }).catchError((error){
+                                  print("Failed to add user: $error");
+                                });
 
-                              });
+                              }
                             },
                             child: Container(
                               height: 50.0,
