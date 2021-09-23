@@ -1,6 +1,8 @@
+import 'package:chatmate_login/models/disk_storage.dart';
 import 'package:chatmate_login/screens/authenticate/register.dart';
 import 'package:chatmate_login/screens/home/home.dart';
 import 'package:chatmate_login/services/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -17,9 +19,14 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
+  final DiskStorage _diskStorage = DiskStorage();
 
   // Define two states: username and password
   // These states keep track of the values being entered in the sign in form
+
+  //----------------------------------------------------------------------------
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   String username = '';
   String password = '';
@@ -129,6 +136,15 @@ class _SignInState extends State<SignIn> {
                               dynamic result = await _auth.signInWithEmailAndPassword(username, password);
 
                               if(result != null){
+                                final usernameTemp = await users.doc('$username').get();
+                                print('==================');
+                                print('USERNAME');
+                                print(usernameTemp.data()['username']);
+                                final usernameToSave = usernameTemp.data()['username'];
+
+                                _diskStorage.saveToDisk('$usernameToSave', '$username');
+
+
                                 setState(() {
                                   _loading = false;
                                   Navigator.push(

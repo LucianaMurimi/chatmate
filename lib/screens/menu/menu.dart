@@ -3,6 +3,8 @@ import 'package:chatmate_login/services/auth.dart';
 import 'package:chatmate_login/theme/styles.dart';
 import 'package:flutter/material.dart';
 
+import 'profile.dart';
+
 class Menu extends StatelessWidget {
 
   final AuthService _auth = AuthService();
@@ -36,6 +38,12 @@ class Menu extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.person, size: 26.0),
             title: Text('Profile'),
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Profile()),
+              );
+            },
           ),
           ListTile(
             leading: Icon(Icons.help_outline_rounded, size: 26.0),

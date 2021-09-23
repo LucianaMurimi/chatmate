@@ -143,8 +143,9 @@ class _TherapyState extends State<Therapy> {
                   ],
                 ),
               ]
-              //----------------------------------------------------------------
-            ),
+            //----------------------------------------------------------------
+
+          ),
           ),
 
           bottom: TabBar(
@@ -295,7 +296,7 @@ class _TherapyState extends State<Therapy> {
                             child: Text('CONFIRM',
                                 style: TextStyle(color: Color(0xFFffffff), fontFamily: 'MonospaceBold', fontSize: 18.0, fontWeight: FontWeight.bold, letterSpacing: 2)),
                             onPressed: () async {
-                              // Get daraja service
+
                               try{
                                 setState(() {
                                   _loading = true;
@@ -303,6 +304,7 @@ class _TherapyState extends State<Therapy> {
                                 await processRequest();
 
                               } catch(error){
+                                _loading = false;
                                 print(error);
 
                               }

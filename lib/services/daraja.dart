@@ -43,7 +43,7 @@ Future processRequest() async {
    print(accessCredentials.accessToken);
 
    try{
-     await http.post(
+     final response = await http.post(
          Uri.parse('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest'),
          headers: {
            'Authorization': 'Bearer ${accessCredentials.accessToken}',
@@ -64,6 +64,8 @@ Future processRequest() async {
            "TransactionDesc": "Payment of X"
          })
      );
+     print(jsonDecode(response.body));
+
    } catch(error){
      print(error);
    }
