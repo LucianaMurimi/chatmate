@@ -28,7 +28,8 @@ class _DepressionState extends State<Depression> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference depressionSupportGroup = FirebaseFirestore.instance.collection('depressionSupportGroup');
 
-  final Stream<QuerySnapshot> _depressionSupportGroupStream = FirebaseFirestore.instance.collection('depressionSupportGroup').snapshots();
+  final Stream<QuerySnapshot> _depressionSupportGroupStream = FirebaseFirestore.instance.collection('depressionSupportGroup')
+      .orderBy('timestamp', descending: false).snapshots();
   //----------------------------------------------------------------------------
 
   Widget build(BuildContext context) {

@@ -66,6 +66,7 @@ flutter:
     - assets/images/addicted.png
     - assets/images/depressed.png
     - assets/images/profile.jpg
+    - assets/images/bg.jpg
 
 
   fonts:
