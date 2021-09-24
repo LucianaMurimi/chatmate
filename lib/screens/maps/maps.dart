@@ -1,4 +1,7 @@
+import 'package:chatmate_login/screens/home/home.dart';
 import 'package:chatmate_login/screens/menu/menu.dart';
+import 'package:chatmate_login/screens/support/depressionchat.dart';
+import 'package:chatmate_login/screens/support/groups.dart';
 import 'package:chatmate_login/services/auth.dart';
 import 'package:chatmate_login/theme/styles.dart';
 import 'package:flutter/material.dart';
@@ -317,15 +320,15 @@ class _MyMapsPageState extends State<MyMapsPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
 
               children: [
-                IconButton(onPressed: (){}, icon: Icon(Icons.home, size: 26.0)),
+                IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Home()),);}, icon: Icon(Icons.home, size: 26.0)),
                 IconButton(onPressed: (){}, icon: Icon(Icons.notifications_outlined, size: 26.0)),
                 IconButton(onPressed: (){
                   Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Maps()));
                 }, icon: Icon(Icons.directions_sharp, size: 26.0)),
-                IconButton(onPressed: (){}, icon: Icon(Icons.people_alt_outlined, size: 26.0)),
-                IconButton(onPressed: (){}, icon: Icon(Icons.chat_bubble_outline, size: 26.0)),
+                IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Groups()),);}, icon: Icon(Icons.people_alt_outlined, size: 26.0)),
+                IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Depression()));}, icon: Icon(Icons.chat_bubble_outline, size: 26.0)),
               ],
 
             ),

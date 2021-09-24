@@ -174,13 +174,20 @@ class _SearchResultsState extends State<SearchResults> {
                                       ),
                                     ),
                                     Container(
-                                        padding: EdgeInsets.only(top: 0.0, right: 16.0, bottom: 0.0, left: 16.0),
-                                        decoration: BoxDecoration(border: Border.all(color: Color(0xFF00c853), width: 2.0), borderRadius: BorderRadius.circular(24.0)),
+                                        padding: EdgeInsets.only(top: 2.0, right: 16.0, bottom: 2.0, left: 16.0),
+                                        decoration: BoxDecoration(color: Color(0xFF00c853), borderRadius: BorderRadius.circular(24.0)),
 
-                                        child: TextButton(
-                                            onPressed: (){},
-                                            child: Text('Connect', style: TextStyle(color: Color(0xBF000000), fontWeight: FontWeight.bold),))
-                                    ),
+
+                                        child: Row(
+                                          children: [
+                                            TextButton(
+                                              child: Text('${data['phone']}',
+                                                  style: TextStyle(color: Color(0xFFffffff), fontFamily: 'MonospaceBold', fontSize: 18.0, fontWeight: FontWeight.bold,)),
+                                              onPressed: (){},
+                                            ),
+                                          ],
+                                        )
+                                    )
 
                                   ],
                                 ),
