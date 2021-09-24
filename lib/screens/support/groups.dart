@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:chatmate_login/theme/styles.dart';
 import 'Addictonschat.dart';
 import 'depressionchat.dart';
+import 'package:chatmate_login/screens/maps/maps.dart';
 
 //GROUPS
  class Groups extends StatelessWidget{
@@ -13,16 +14,14 @@ import 'depressionchat.dart';
 
          backgroundColor: Colors.white,
          appBar: AppBar(
-            backgroundColor: Colors.white,
-           iconTheme: chatmateIconTheme(ThemeData.light().iconTheme),
+           backgroundColor: Colors.white,
+           iconTheme:  IconThemeData(color: Color(0xFF000000)),
            elevation: 2.0,
 
            toolbarHeight: 72.0,
 
            titleSpacing: 0,
 
-           // title: Text('Join Your Preferred Group',
-           //     style: TextStyle(color: Color(0xFF000000), fontFamily: 'MonospaceBold', fontSize: 20.0, fontWeight: FontWeight.bold)),
            title: Row(
              children: [
                Image.asset("assets/images/chatmatelogo.png", width:120.0, height: 20.0),
@@ -156,7 +155,7 @@ import 'depressionchat.dart';
               children: [
                 IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Home()),);}, icon: Icon(Icons.home, size: 26.0)),
                 IconButton(onPressed: (){}, icon: Icon(Icons.notifications_outlined, size: 26.0)),
-                IconButton(onPressed: (){}, icon: Icon(Icons.directions_sharp, size: 26.0)),
+                IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Maps()));}, icon: Icon(Icons.directions_sharp, size: 26.0)),
                 IconButton(onPressed: (){}, icon: Icon(Icons.people_alt_outlined, size: 26.0)),
                 IconButton(onPressed: (){}, icon: Icon(Icons.chat_bubble_outline, size: 26.0)),],),)),
 

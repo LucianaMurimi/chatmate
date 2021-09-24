@@ -1,8 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.chatmate_login">
-   <application
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <application
         android:label="chatmate_login"
         android:icon="@mipmap/ic_launcher">
+
+        <!-- TODO: Add your Google Maps API key here -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAOUVRf4QHdEazld_un-5E68kKQs3y6RuU"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

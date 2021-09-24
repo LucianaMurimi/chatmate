@@ -138,9 +138,7 @@ class _SignInState extends State<SignIn> {
 
                               if(result != null){
                                 final usernameTemp = await users.doc('$username').get();
-                                print('==================');
-                                print('USERNAME');
-                                print(usernameTemp.data()['username']);
+
                                 final usernameToSave = usernameTemp.data()['username'];
                                 usernameMain = usernameToSave;
 

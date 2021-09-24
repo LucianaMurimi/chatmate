@@ -17,6 +17,7 @@ class Addictions extends StatefulWidget {
 class _AddictionsState extends State<Addictions> {
   var messengerName;
   var message;
+  var timestamp;
 
   var profile;
   var savedUsername;
@@ -34,20 +35,6 @@ class _AddictionsState extends State<Addictions> {
       .orderBy('timestamp', descending: false).snapshots();
   //----------------------------------------------------------------------------
 
-  getSavedProfile() async {
-    profile = await _diskStorage.readFromDisk();
-    setState(() {
-      savedUsername = profile[0];
-    });
-  }
-
-  void initState(){
-    getSavedProfile();
-
-    super.initState();
-  }
-
-
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,31 +49,21 @@ class _AddictionsState extends State<Addictions> {
 
         titleSpacing: 0,
 
-        title: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Image.asset("assets/images/cmlogo.png", width: 28, height: 26.0),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-              Container(
-                child: Row(
-                  children: [
-                    Text('ADDICTION SUPPORT',
-                        style: TextStyle(color: Color(0xFF000000), fontFamily: 'MonospaceBold', fontSize: 16.0,)
-                    ),
-                    IconButton(onPressed: (){
-                      // On pressing the menu button => the menu screen is served
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Menu()),
-                      );
-                    }, icon: Icon(Icons.more_vert, color: Color(0xFF000000), size: 24)),
-                  ],
-                ),
-
-              )
-            ],
-          ),
+          children: [
+            Text('ADDICTION SUPPORT',
+                style: TextStyle(color: Color(0xFF000000), fontFamily: 'MonospaceBold', fontSize: 16.0,)
+            ),
+            IconButton(onPressed: (){
+              // On pressing the menu button => the menu screen is served
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Menu()),
+              );
+            }, icon: Icon(Icons.more_vert, color: Color(0xFF000000), size: 24)),
+          ],
         ),
       ),
       //------------------------------------------------------------------------
@@ -122,13 +99,9 @@ class _AddictionsState extends State<Addictions> {
                               Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
                               messengerName = data['messenger_name'];
                               message = data['message'];
-                              print(data);
-                              print("==========================================");
+                              timestamp = data['timestamp'];
 
-
-                              late final savedLuci = _diskStorage.readFromDisk();
-                              print(messengerName);
-                              print(usernameMain);
+                              var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp  * 1000, isUtc: false);
 
                               return Container(
                                 padding: EdgeInsets.only(
@@ -163,8 +136,11 @@ class _AddictionsState extends State<Addictions> {
 
                                     children: [
                                       Text('$messengerName'.toUpperCase(), textAlign: TextAlign.start, style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Color(0xB3000000), letterSpacing: 1)),
-                                      SizedBox(height: 7.0),
+                                      SizedBox(height: 8.0),
                                       Text('$message', textAlign: TextAlign.start, style: TextStyle(fontSize: 14.0, color: Color(0xFF000000))),
+                                      SizedBox(height: 12.0,),
+                                      Text('${date.toLocal().hour}:${date.toLocal().minute},  ${date.toLocal().day}/${date.toLocal().month}/${date.toLocal().year}',
+                                          textAlign: TextAlign.start, style: TextStyle(fontSize: 8, color: Color(0xB3000000), letterSpacing: 1)),
                                     ],
                                   ),
 
@@ -206,6 +182,7 @@ class _AddictionsState extends State<Addictions> {
                                 decoration: InputDecoration(
                                   hintText: "message ...",
                                   border: InputBorder.none,
+                                  contentPadding: EdgeInsets.only(left: 8, right: 8),
                                 ),
                               )
                           ),

@@ -1,3 +1,4 @@
+import 'package:chatmate_login/globals.dart';
 import 'package:http/http.dart' as http;
 
 import 'dart:async';
@@ -65,6 +66,7 @@ Future processRequest() async {
          })
      );
      print(jsonDecode(response.body));
+     loadingPayment = true;
 
    } catch(error){
      print(error);

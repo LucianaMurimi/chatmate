@@ -3,8 +3,6 @@ import 'package:chatmate_login/services/auth.dart';
 import 'package:chatmate_login/theme/styles.dart';
 import 'package:flutter/material.dart';
 
-import 'profile.dart';
-
 class Menu extends StatelessWidget {
 
   final AuthService _auth = AuthService();
@@ -36,24 +34,6 @@ class Menu extends StatelessWidget {
       body: Column(
         children: [
           ListTile(
-            leading: Icon(Icons.person, size: 26.0),
-            title: Text('Profile'),
-            onTap: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Profile()),
-              );
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.help_outline_rounded, size: 26.0),
-            title: Text('Help'),
-          ),
-          ListTile(
-            leading: Icon(Icons.report_problem_outlined, size: 26.0),
-            title: Text('Report a Problem'),
-          ),
-          ListTile(
             leading: Icon(Icons.logout_rounded, size: 26.0),
             title: Text('Log Out'),
             onTap: () {
@@ -66,19 +46,19 @@ class Menu extends StatelessWidget {
                       actions: [
                         TextButton(onPressed: () async {
                           await _auth.signOut()
-                          .then((value) => {
+                              .then((value) => {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => SignIn()),
-                              )
-                            });
+                              context,
+                              MaterialPageRoute(builder: (context) => SignIn()),
+                            )
+                          });
                         },
-                        child: Text('Yes', style: TextStyle(color: Color(0xFF000000), fontWeight: FontWeight.bold),),
+                          child: Text('Yes', style: TextStyle(color: Color(0xFF000000), fontWeight: FontWeight.bold),),
                         ),
                         TextButton(onPressed: (){
                           Navigator.pop(context, false);
                         },
-                        child: Text('No', style: TextStyle(color: Color(0xFF009624), fontWeight: FontWeight.bold),),
+                          child: Text('No', style: TextStyle(color: Color(0xFF009624), fontWeight: FontWeight.bold),),
                         )
                       ],
                     );
@@ -86,7 +66,14 @@ class Menu extends StatelessWidget {
               );
             },
           ),
-
+          ListTile(
+            leading: Icon(Icons.help_outline_rounded, size: 26.0),
+            title: Text('Help'),
+          ),
+          ListTile(
+            leading: Icon(Icons.report_problem_outlined, size: 26.0),
+            title: Text('Report a Problem'),
+          ),
         ],
       ),
 

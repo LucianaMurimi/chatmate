@@ -8,6 +8,7 @@ import '../../services/daraja.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'search_results.dart';
+import 'package:chatmate_login/globals.dart';
 
 class Therapy extends StatefulWidget {
   const Therapy({Key? key}) : super(key: key);
@@ -20,7 +21,6 @@ class _TherapyState extends State<Therapy> {
   String email = '';
   int phone = 0;
   bool consentCheck = false;
-  bool _loading = false;
   bool _search = false;
 
   final searchItemController = TextEditingController();
@@ -156,10 +156,10 @@ class _TherapyState extends State<Therapy> {
               Tab(child: Text('Contact',
                 style: TextStyle(color: Color(0xFF000000), fontFamily: 'MonospaceBold', fontSize: 14.0),
               ),),
-              Tab(child: Text('Payment',
+              Tab(child: Text('Connect',
                 style: TextStyle(color: Color(0xFF000000), fontFamily: 'MonospaceBold', fontSize: 14.0),
               ),),
-              Tab(child: Text('Connect',
+              Tab(child: Text('Payment',
                 style: TextStyle(color: Color(0xFF000000), fontFamily: 'MonospaceBold', fontSize: 14.0),
               ),),
             ],
@@ -181,7 +181,7 @@ class _TherapyState extends State<Therapy> {
 
                     children: [
                       SizedBox(height: 24,),
-                      Text('Step 1: Contact Information',
+                      Text('Contact Information',
                         style: TextStyle(color: Color(0xFF000000), fontFamily: 'MonospaceBold', fontSize: 18.0),
                       ),
                       SizedBox(height: 16,),
@@ -238,7 +238,12 @@ class _TherapyState extends State<Therapy> {
                                     child: Text('SUBMIT',
                                         style: TextStyle(color: Color(0xFFffffff), fontFamily: 'MonospaceBold', fontSize: 18.0, fontWeight: FontWeight.bold, letterSpacing: 2)),
                                     onPressed: (){
-
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(content: Text('Contact information successfully submitted!',
+                                            style: TextStyle(color: Colors.green),
+                                            textAlign: TextAlign.center,),
+                                            backgroundColor: Color(0xFFffffff),)
+                                      );
                                     },
                                   )
                               ),
@@ -252,72 +257,7 @@ class _TherapyState extends State<Therapy> {
               ),
 
               //------------------------------------------------------------------
-              // 2. Payment
-              SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.only(left: 12.0, right: 12.0),
-
-                  child: Column(
-
-                    children: [
-                      SizedBox(height: 24,),
-                      Text('Step 2: Payment',
-                        style: TextStyle(color: Color(0xFF000000), fontFamily: 'MonospaceBold', fontSize: 18.0),
-                      ),
-                      SizedBox(height: 16,),
-                      Text('Chatmate Therapist Connect service brings you a specially curated list of the best therapists near you.'
-                          ' Putting you in touch with the best professionals in the field.', textAlign: TextAlign.center),
-                      SizedBox(height: 16),
-                      Divider(height: 4.0,),
-                      SizedBox(height: 16),
-                      Text('Charges:', style: TextStyle(fontFamily: 'MonospaceBold', fontSize: 18.0),),
-                      SizedBox(height: 8.0),
-                      RichText(
-                        text: TextSpan( style: TextStyle(fontFamily: 'WorkSansMedium', fontSize: 18, color: Colors.black),
-                          children: <TextSpan>[
-                            TextSpan(text: 'One time access fee of ', style: TextStyle(color: Color(0xB3000000), fontWeight: FontWeight.bold)),
-                            TextSpan(text: 'Ksh 1.00',
-                                style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF009624))),
-                          ],
-                        ),
-                      ),
-
-                      SizedBox(height: 16),
-                      Divider(height: 4.0,),
-                      SizedBox(height: 16),
-                      Text('Confirm payment of Ksh 1.00 to access Chatmate Therapist Connect service. This amount will be charged to your M-PESA Account.', textAlign: TextAlign.center,),
-                      SizedBox(height: 20),
-                      Container(
-                          padding: EdgeInsets.only(top: 2.0, right: 16.0, bottom: 2.0, left: 16.0),
-                          decoration: BoxDecoration(color: Color(0xFF00c853), borderRadius: BorderRadius.circular(24.0)),
-
-
-                          child: TextButton(
-                            child: Text('CONFIRM',
-                                style: TextStyle(color: Color(0xFFffffff), fontFamily: 'MonospaceBold', fontSize: 18.0, fontWeight: FontWeight.bold, letterSpacing: 2)),
-                            onPressed: () async {
-
-                              try{
-                                setState(() {
-                                  _loading = true;
-                                });
-                                await processRequest();
-
-                              } catch(error){
-                                _loading = false;
-                                print(error);
-
-                              }
-                            },
-                          )
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              //------------------------------------------------------------------
-              // 3. Connect
+              // 2. Connect
               Container(
                 padding: EdgeInsets.only(left: 12.0, right: 12.0, bottom: 16),
 
@@ -360,6 +300,7 @@ class _TherapyState extends State<Therapy> {
                                                   ),
                                                 ),
                                               ),
+                                              SizedBox(width: 24,),
 
                                               Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -424,18 +365,26 @@ class _TherapyState extends State<Therapy> {
                                                   ],
                                                 ),
                                               ),
-                                              Container(
-                                                  padding: EdgeInsets.only(top: 0.0, right: 16.0, bottom: 0.0, left: 16.0),
-                                                  decoration: BoxDecoration(border: Border.all(color: Color(0xFF00c853), width: 2.0), borderRadius: BorderRadius.circular(24.0)),
 
-                                                  child: TextButton(
-                                                      onPressed: (){},
-                                                      child: Text('Connect', style: TextStyle(color: Color(0xBF000000), fontWeight: FontWeight.bold),))
-                                              ),
+                                              Container(
+                                                  padding: EdgeInsets.only(top: 2.0, right: 16.0, bottom: 2.0, left: 16.0),
+                                                  decoration: BoxDecoration(color: Color(0xFF00c853), borderRadius: BorderRadius.circular(24.0)),
+
+
+                                                  child: Row(
+                                                    children: [
+                                                      TextButton(
+                                                        child: Text('${data['phone']}',
+                                                            style: TextStyle(color: Color(0xFFffffff), fontFamily: 'MonospaceBold', fontSize: 18.0, fontWeight: FontWeight.bold,)),
+                                                        onPressed: (){},
+                                                      ),
+                                                    ],
+                                                  )
+                                              )
 
                                             ],
                                           ),
-                                          SizedBox(height: 16,),
+                                          SizedBox(height: 24,),
                                         ],
                                       )
                                     ],
@@ -454,10 +403,77 @@ class _TherapyState extends State<Therapy> {
 
               ),
               //------------------------------------------------------------------
+
+              //------------------------------------------------------------------
+              // 3. Payment
+              SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.only(left: 12.0, right: 12.0),
+
+                  child: Column(
+
+                    children: [
+                      SizedBox(height: 24,),
+                      Text('Buy the team a coffee!!!',
+                        style: TextStyle(color: Color(0xFF000000), fontFamily: 'MonospaceBold', fontSize: 20.0),
+                      ),
+                      Image.asset("assets/images/coffee.png", height: 180),
+                      // SizedBox(height: 16,),
+                      Text('We hope you love the app.', textAlign: TextAlign.center),
+                      SizedBox(height: 16),
+                      Text('You can buy the team at chatmate a coffee through M-PESA.', textAlign: TextAlign.center),
+                      // SizedBox(height: 16),
+                      // Divider(height: 4.0,),
+                      // SizedBox(height: 16),
+                      // Text('Charges:', style: TextStyle(fontFamily: 'MonospaceBold', fontSize: 18.0),),
+                      // SizedBox(height: 8.0),
+                      // RichText(
+                      //   text: TextSpan( style: TextStyle(fontFamily: 'WorkSansMedium', fontSize: 18, color: Colors.black),
+                      //     children: <TextSpan>[
+                      //       TextSpan(text: 'One time access fee of ', style: TextStyle(color: Color(0xB3000000), fontWeight: FontWeight.bold)),
+                      //       TextSpan(text: 'Ksh 1.00',
+                      //           style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF009624))),
+                      //     ],
+                      //   ),
+                      // ),
+
+                      SizedBox(height: 16),
+                      Divider(height: 4.0,),
+                      SizedBox(height: 16),
+                      Text('Ksh 1.00 will be directly charged to your M-PESA Account.', textAlign: TextAlign.center,),
+                      SizedBox(height: 20),
+                      Container(
+                          padding: EdgeInsets.only(top: 2.0, right: 16.0, bottom: 2.0, left: 16.0),
+                          decoration: BoxDecoration(color: Color(0xFF00c853), borderRadius: BorderRadius.circular(24.0)),
+
+
+                          child: TextButton(
+                            child: Text('Buy',
+                                style: TextStyle(color: Color(0xFFffffff), fontFamily: 'MonospaceBold', fontSize: 18.0, fontWeight: FontWeight.bold, letterSpacing: 2)),
+                            onPressed: () async {
+
+                              try{
+                                setState(() {
+                                  loadingPayment = true;
+                                });
+                                await processRequest().then((value) => setState(() {  }));
+
+                              } catch(error){
+                                loadingPayment = false;
+                                print(error);
+
+                              }
+                            },
+                          )
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
 
-          isLoading: _loading,
+          isLoading: loadingPayment,
           opacity: 0.8,
           progressIndicator: Column(
             mainAxisAlignment: MainAxisAlignment.center,
